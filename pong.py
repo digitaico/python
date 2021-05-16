@@ -51,11 +51,11 @@ score_i = 0
 def raq_i_up():
     y = raq_i.ycor()
     y += 20
-    raq_1.sety(y)
+    raq_i.sety(y)
 
 def raq_i_down():
     y = raq_i.ycor()
-    y -= -20
+    y -= 20
     raq_i.sety(y)
 
 def raq_d_up():
@@ -65,7 +65,7 @@ def raq_d_up():
 
 def raq_d_down():
     y = raq_d.ycor()
-    y -= -20
+    y -= 20
     raq_d.sety(y)
 
 pg.listen()
@@ -105,11 +105,10 @@ while True:
         pt.write("Jugador A: {} Juagdor B: {}".format(score_d, score_i), align='center', font=('Courier', 24, 'bold'))
 
     # golpe a la bola: colision
-    if (bola.xcor() > 340 and bola.xcor() < 350)  and (bola.ycor() < raq_i.ycor() + 60 and bola.ycor() > raq_i.ycor() - 60 ):
+    if (bola.xcor() > 340 and bola.xcor() < 350)  and (bola.ycor() < raq_d.ycor() + 60 and bola.ycor() > raq_d.ycor() - 60 ):
         bola.setx(340)
         bola.dx *=-1
 
-    if (bola.xcor() < -340 and bola.xcor() > -350)  and (bola.ycor() < raq_d.ycor() + 60 and bola.ycor() > raq_d.ycor() - 60 ):
+    if (bola.xcor() < -340 and bola.xcor() > -350)  and (bola.ycor() < raq_i.ycor() + 60 and bola.ycor() > raq_i.ycor() - 60 ):
         bola.setx(-340)
         bola.dx *=-1
-
