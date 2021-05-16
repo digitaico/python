@@ -72,7 +72,7 @@ pg.listen()
 
 pg.onkey(raq_d_up, 'Up')
 pg.onkey(raq_d_down, 'Down')
-pg.onkeypress(raq_i_up, 'w')
+pg.onkey(raq_i_up, 'w')
 pg.onkey(raq_i_down, 's')
 
 while True:
@@ -82,8 +82,13 @@ while True:
     bola.sety(bola.ycor() + bola.dy)
 
     # evitar sobrepasar bordes
-    if bola.ycor() > 290 or bola.ycor() < -290:
+    if bola.ycor() > 290:
         bola.dy *= -1
+        bola.sety(290)
+
+    if bola.ycor() < -290:
+        bola.dy *= -1
+        bola.sety(-290)
 
     if bola.xcor() > 390:
         bola.goto(0, 0)
