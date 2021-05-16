@@ -13,7 +13,7 @@ raq_1.speed(0)
 raq_1.shape("square")
 raq_1.color("white")
 raq_1.shapesize(stretch_wid=5, stretch_len=1)
-raq_1.goto(-350, 0)
+raq_1.goto(350, 0)
 raq_1.penup()
 
 
@@ -23,7 +23,7 @@ raq_2.speed(0)
 raq_2.shape("square")
 raq_2.color("white")
 raq_2.shapesize(stretch_wid=5, stretch_len=1)
-raq_2.goto(350, 0)
+raq_2.goto(-350, 0)
 raq_2.penup()
 
 # bola
@@ -33,10 +33,20 @@ bola.shape("circle")
 bola.color("white")
 bola.penup()
 bola.goto(0,0)
+bola.dx = 0.15
+bola.dy = 0.15
 
-# puntahes / scores
-score_a = 0
-score_b = 0
+# pantalla
+pt = turtle.Turtle()
+pt.speed(0)
+pt.color('white')
+pt.goto(0, 260)
+pt.write("Jugador A: 0  Jugador B: 0", align='center', font=('Courier', 24, 'bold'))
+pt.hideturtle()
+
+# puntajes / scores
+score_1 = 0
+score_2 = 0
 
 def raq_1_up():
     y = raq_1.ycor()
@@ -59,13 +69,43 @@ def raq_2_down():
     raq_2.sety(y)
 
 pg.listen()
+
 pg.onkey(raq_1_up, 'Up')
 pg.onkey(raq_1_down, 'Down')
-pg.onkey(raq_2_up, 'Up')
-pg.onkey(raq_2_down, 'Down')
-
+pg.onkeypress(raq_2_up, 'w')
+pg.onkey(raq_2_down, 's')
 
 while True:
     pg.update()
 
-    
+    bola.setx(bola.xcor() + bola.dx)
+    bola.sety(bola.ycor() + bola.dy)
+
+    # evitar sobrepasar bordes
+    if bola.ycor() > 290 or bola.ycor() < -290:
+        bola.dy *= -1
+
+    if bola.xcor() > 390:
+        bola.goto(0, 0)
+        bola.dx *= -1
+        score_1 += 1
+        pt.clear()
+        pt.write("Jugador A: {} Juagdor B: {}".format(score_1, score_2), align='center', font=('Courier', 24, 'bold'))
+
+    if bola.xcor() < -390:
+        bola.goto(0, 0)
+        bola.dx *= -1
+        score_2 += 1
+        pt.clear()
+        pt.write("Jugador A: {} Juagdor B: {}".format(score_1, score_2), align='center', font=('Courier', 24, 'bold'))
+
+    # golpe a la bola: colision
+    if (bola.xcor() > 340 and bola.xcor() < 350)  and (bola.ycor() < raq_2.ycor() + 60 and bola.ycor() > raq_2.ycor() - 60 ):
+        bola.setx(340)
+        bola.dx *=-1
+
+    if (bola.xcor() < -340 and bola.xcor() > -350)  and (bola.ycor() < raq_1.ycor() + 60 and bola.ycor() > raq_1.ycor() - 60 
+                                                         ):
+        bola.setx(-340)
+        bola.dx *=-1
+
